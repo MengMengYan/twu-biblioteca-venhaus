@@ -1,0 +1,43 @@
+1.1 / View a welcome message
+The message should say:
+“Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!”
+
+1.2 / View a list of all books
+Assume that there is a pre-existing list of books (make them up).
+You don't need to support adding or removing books from the library.
+
+1.3 / View author and publication year on all books
+The book listing should have column separators for this information.
+
+1.4 / View a main menu of options
+Instead of automatically seeing the book list, display a menu list of options first.
+The only option on the menu should be “List of books” (and when selected would lead to the book list created in #1.2).
+All future options for additional features in Biblioteca should be added to this menu also.
+
+1.5 / Get notified when I chose an invalid option
+The invalid message should say:
+“Please select a valid option!”
+
+1.6 / Quit the application
+
+1.7 / Checkout a book
+Checked out books should not appear in the list of all library books.
+
+1.8 / Success message on checkout of a book
+The message should say:
+“Thank you! Enjoy the book”
+
+1.9 / Un-successful message on checkout of a book
+The message should say:
+“Sorry, that book is not available”
+
+1.10 / Return a book
+Returned books should appear in the list of library books
+
+1.11 / Notified on successful return
+The message should say:
+“Thank you for returning the book”.
+
+1.12 / Notified on unsuccessful return
+The message should say:
+“That is not a valid book to return.”.
