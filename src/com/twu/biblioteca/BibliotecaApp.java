@@ -15,12 +15,15 @@ public class BibliotecaApp {
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
         System.out.println("Choose an option by entering the associated number and pressing ENTER");
         System.out.println("1. List of books");
-        if (scanner.hasNextInt()) {
-            int selection = scanner.nextInt();
-            if (selection == 1) {
+
+        if (scanner.hasNext()) {
+            String input = scanner.next();
+            if (input.equals("1")) {
                 for (String book : listOfBooks) {
                     System.out.println(book);
                 }
+            } else {
+                System.out.println("Please select a valid option!");
             }
         }
     }

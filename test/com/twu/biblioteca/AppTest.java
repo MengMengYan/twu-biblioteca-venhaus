@@ -17,12 +17,14 @@ public class AppTest {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final PrintStream outOriginal = System.out;
 
-    private final int GREETING_START = 0;
-    private final int GREETING_END = GREETING_START + 1;
-    private final int OPTIONS_START = GREETING_END;
-    private final int OPTIONS_END = OPTIONS_START + 2;
-    private final int LIST_START = OPTIONS_END;
-    private final int LIST_END = LIST_START + 3;
+    private final int GREETING_START        = 0;
+    private final int GREETING_END          = GREETING_START + 1;
+    private final int OPTIONS_START         = GREETING_END;
+    private final int OPTIONS_END           = OPTIONS_START + 2;
+    private final int OPTIONS_ERROR_START   = OPTIONS_END;
+    private final int OPTIONS_ERROR_END     = OPTIONS_ERROR_START + 1;
+    private final int LIST_START            = OPTIONS_END;
+    private final int LIST_END              = LIST_START + 3;
 
     @Before
     public void setupOutput() {
@@ -60,6 +62,40 @@ public class AppTest {
     }
 
     @Test
+    public void applicationShouldNotProgressIfNoOptionSelected() {
+        int numberOfLinesDisplayed = OPTIONS_END;
+        BibliotecaApp app = new BibliotecaApp();
+
+        app.start();
+
+        String appOutput = outStream.toString();
+        String[] appOutputArr = appOutput.split("\n");
+        assertThat(appOutputArr.length, is(numberOfLinesDisplayed));
+    }
+
+    @Test
+    public void applicationShouldWarnUserIfLetterIsSelected() {
+        String[] expected = {"Please select a valid option!"};
+        BibliotecaApp app = setupApp("z");
+
+        app.start();
+
+        String[] result = getPartOfResultFromAppOutput(OPTIONS_ERROR_START, OPTIONS_ERROR_END);
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void applicationShouldWarnUserIfInvalidNumberIsSelected() {
+        String[] expected = {"Please select a valid option!"};
+        BibliotecaApp app = setupApp("100");
+
+        app.start();
+
+        String[] result = getPartOfResultFromAppOutput(OPTIONS_ERROR_START, OPTIONS_ERROR_END);
+        assertThat(result, is(expected));
+    }
+
+    @Test
     public void userCanViewListOfBooksWithAuthorAndPublicationYear() {
         String[] expected = {
                 "Book 1 | Author A | 2000",
@@ -72,18 +108,6 @@ public class AppTest {
 
         String[] result = getPartOfResultFromAppOutput(LIST_START, LIST_END);
         assertThat(result, is(expected));
-    }
-
-    @Test
-    public void applicationShouldNotProgressIfNoOptionSelected() {
-        int numberOfLinesDisplayed = OPTIONS_END;
-        BibliotecaApp app = new BibliotecaApp();
-
-        app.start();
-
-        String appOutput = outStream.toString();
-        String[] appOutputArr = appOutput.split("\n");
-        assertThat(appOutputArr.length, is(numberOfLinesDisplayed));
     }
 
     private String[] getPartOfResultFromAppOutput(int from, int to) {
