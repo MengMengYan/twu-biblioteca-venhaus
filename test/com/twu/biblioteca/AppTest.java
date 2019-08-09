@@ -4,11 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Scanner;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -30,24 +28,34 @@ public class AppTest {
 
     @Test
     public void applicationGreetsUserOnStartup() {
-        String greeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
+        String expected = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
         BibliotecaApp app = new BibliotecaApp();
 
         app.start();
 
-        assertThat(outStream.toString(), is(greeting));
+        String result = outStream.toString();
+        assertThat(result, is(expected));
     }
 
     @Test
-    public void userCanViewListOfBooks() {
-        String[] listOfBooks = {"Book 1", "Book 2", "Book 3"};
+    public void userCanViewListOfBooksWithAuthorAndPublicationYear() {
+        String[] expected = {
+                "Book 1 | Author A | 2000",
+                "Book 2 | Author B | 2001",
+                "Book 3 | Author C | 2002"
+        };
         BibliotecaApp app = new BibliotecaApp();
 
         app.start();
 
+        String[] result = getPartOfResultFromAppOutput(1, 4);
+        assertThat(result, is(expected));
+    }
+
+    private String[] getPartOfResultFromAppOutput(int from, int to) {
         String appOutput = outStream.toString();
         String[] appOutputArr = appOutput.split("\n");
-        String[] result = Arrays.copyOfRange(appOutputArr, 1, 4);
-        assertThat(listOfBooks, is(result));
+        String[] result = Arrays.copyOfRange(appOutputArr, from, to);
+        return result;
     }
 }
