@@ -10,8 +10,7 @@ You don't need to support adding or removing books from the library.
 The book listing should have column separators for this information.
 
 1.4 / View a main menu of options
-Instead of automatically seeing the bo
-ok list, display a menu list of options first.
+Instead of automatically seeing the book list, display a menu list of options first.
 The only option on the menu should be “List of books” (and when selected would lead to the book list created in #1.2).
 All future options for additional features in Biblioteca should be added to this menu also.
 

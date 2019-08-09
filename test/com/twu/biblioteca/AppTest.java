@@ -66,13 +66,25 @@ public class AppTest {
                 "Book 2 | Author B | 2001",
                 "Book 3 | Author C | 2002"
         };
-        setupInput("1\n");
         BibliotecaApp app = new BibliotecaApp();
+        setupInput(app,"1\n");
 
         app.start();
 
         String[] result = getPartOfResultFromAppOutput(LIST_START, LIST_END);
         assertThat(result, is(expected));
+    }
+
+    @Test
+    public void applicationShouldNotProgressIfNoOptionSelected() {
+        int numberOfLinesDisplayed = OPTIONS_END;
+        BibliotecaApp app = new BibliotecaApp();
+
+        app.start();
+
+        String appOutput = outStream.toString();
+        String[] appOutputArr = appOutput.split("\n");
+        assertThat(appOutputArr.length, is(numberOfLinesDisplayed));
     }
 
     private String[] getPartOfResultFromAppOutput(int from, int to) {
@@ -82,10 +94,10 @@ public class AppTest {
         return result;
     }
 
-    public static void setupInput(String input) {
+    public void setupInput(BibliotecaApp app, String input) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
-        BibliotecaApp.openInput();
+        app.openInput();
     }
 
 }
