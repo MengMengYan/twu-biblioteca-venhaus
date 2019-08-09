@@ -28,13 +28,13 @@ public class AppTest {
 
     @Test
     public void applicationGreetsUserOnStartup() {
-        String expected = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
+        String expected = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
         BibliotecaApp app = new BibliotecaApp();
 
         app.start();
 
-        String result = outStream.toString();
-        assertThat(result, is(expected));
+        String[] result = getPartOfResultFromAppOutput(0,1);
+        assertThat(result[0], is(expected));
     }
 
     @Test

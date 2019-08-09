@@ -2,7 +2,11 @@ package com.twu.biblioteca;
 
 public class BibliotecaApp {
 
-    private String[] listOfBooks = {"Book 1", "Book 2", "Book 3"};
+    private String[] listOfBooks = {
+            "Book 1 | Author A | 2000",
+            "Book 2 | Author B | 2001",
+            "Book 3 | Author C | 2002"
+    };
 
     public static void main(String[] args) {
     }
