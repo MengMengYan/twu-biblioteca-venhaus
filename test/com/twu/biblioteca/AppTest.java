@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -48,7 +49,7 @@ public class AppTest {
     public void applicationDisplaysMenuOfOptions() {
         String[] expected = {
                 "Choose an option by entering the associated number and pressing ENTER",
-                "1. View a list of all books"
+                "1. List of books"
         };
         BibliotecaApp app = new BibliotecaApp();
 
@@ -65,6 +66,7 @@ public class AppTest {
                 "Book 2 | Author B | 2001",
                 "Book 3 | Author C | 2002"
         };
+        setupInput("1\n");
         BibliotecaApp app = new BibliotecaApp();
 
         app.start();
@@ -79,4 +81,11 @@ public class AppTest {
         String[] result = Arrays.copyOfRange(appOutputArr, from, to);
         return result;
     }
+
+    public static void setupInput(String input) {
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+        System.setIn(inputStream);
+        BibliotecaApp.openInput();
+    }
+
 }
