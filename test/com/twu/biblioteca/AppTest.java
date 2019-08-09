@@ -16,6 +16,13 @@ public class AppTest {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final PrintStream outOriginal = System.out;
 
+    private final int GREETING_START = 0;
+    private final int GREETING_END = GREETING_START + 1;
+    private final int OPTIONS_START = GREETING_END;
+    private final int OPTIONS_END = OPTIONS_START + 2;
+    private final int LIST_START = OPTIONS_END;
+    private final int LIST_END = LIST_START + 3;
+
     @Before
     public void setupOutput() {
         System.setOut(new PrintStream(outStream));
@@ -33,8 +40,22 @@ public class AppTest {
 
         app.start();
 
-        String[] result = getPartOfResultFromAppOutput(0,1);
+        String[] result = getPartOfResultFromAppOutput(GREETING_START, GREETING_END);
         assertThat(result[0], is(expected));
+    }
+
+    @Test
+    public void applicationDisplaysMenuOfOptions() {
+        String[] expected = {
+                "Choose an option by entering the associated number and pressing ENTER",
+                "1. View a list of all books"
+        };
+        BibliotecaApp app = new BibliotecaApp();
+
+        app.start();
+
+        String[] result = getPartOfResultFromAppOutput(OPTIONS_START, OPTIONS_END);
+        assertThat(result, is(expected));
     }
 
     @Test
@@ -48,7 +69,7 @@ public class AppTest {
 
         app.start();
 
-        String[] result = getPartOfResultFromAppOutput(1, 4);
+        String[] result = getPartOfResultFromAppOutput(LIST_START, LIST_END);
         assertThat(result, is(expected));
     }
 
