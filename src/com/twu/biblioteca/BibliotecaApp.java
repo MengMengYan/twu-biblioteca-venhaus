@@ -13,6 +13,8 @@ public class BibliotecaApp {
 
     public void start() {
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
+        System.out.println("Choose an option by entering the associated number and pressing ENTER");
+        System.out.println("1. View a list of all books");
         for (String book : listOfBooks) {
             System.out.println(book);
         }
