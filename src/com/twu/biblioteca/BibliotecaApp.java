@@ -9,14 +9,19 @@ public class BibliotecaApp {
             "Book 2 | Author B | 2001",
             "Book 3 | Author C | 2002"
     };
-
+    private Scanner scanner = new Scanner(System.in);
 
     public void start() {
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
         System.out.println("Choose an option by entering the associated number and pressing ENTER");
         System.out.println("1. List of books");
-        for (String book : listOfBooks) {
-            System.out.println(book);
+        if (scanner.hasNextInt()) {
+            int selection = scanner.nextInt();
+            if (selection == 1) {
+                for (String book : listOfBooks) {
+                    System.out.println(book);
+                }
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ public class AppTest {
     @Test
     public void applicationGreetsUserOnStartup() {
         String expected = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
-        BibliotecaApp app = new BibliotecaApp();
+        BibliotecaApp app = setupApp("");
 
         app.start();
 
@@ -51,7 +51,7 @@ public class AppTest {
                 "Choose an option by entering the associated number and pressing ENTER",
                 "1. List of books"
         };
-        BibliotecaApp app = new BibliotecaApp();
+        BibliotecaApp app = setupApp("");
 
         app.start();
 
@@ -66,8 +66,7 @@ public class AppTest {
                 "Book 2 | Author B | 2001",
                 "Book 3 | Author C | 2002"
         };
-        BibliotecaApp app = new BibliotecaApp();
-        setupInput(app,"1\n");
+        BibliotecaApp app = setupApp("1\n");
 
         app.start();
 
@@ -94,10 +93,10 @@ public class AppTest {
         return result;
     }
 
-    public void setupInput(BibliotecaApp app, String input) {
+    private BibliotecaApp setupApp(String input) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
-        app.openInput();
+        return new BibliotecaApp();
     }
 
 }
