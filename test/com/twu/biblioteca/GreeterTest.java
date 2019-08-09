@@ -28,7 +28,7 @@ public class GreeterTest {
 
     @Test
     public void applicationGreetsUserOnStartup() {
-        String greeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
+        String greeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
         BibliotecaApp app = new BibliotecaApp();
 
         app.start();
