@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import static com.twu.biblioteca.Text.*;
@@ -27,18 +28,21 @@ public class BibliotecaApp {
         Library.addBook(book1);
     }
 
-    private static String[] formatListOfBooks() {
+    private static List<String> formatListOfBooks() {
         List<Book> bookList = Library.getBookList();
-        String[] prettyListOfBooks = new String[bookList.size()];
-        for(int i = 0; i < prettyListOfBooks.length; i++) {
+        List<String> bookStringList = new ArrayList<>();
+        for(int i = 0; i < bookList.size(); i++) {
             Book book = bookList.get(i);
+            if (!book.isAvailable()) {
+                continue;
+            }
             String str = i + ". "
                        + book.getTitle() + " | "
                        + book.getAuthor() + " | "
                        + book.getYear();
-            prettyListOfBooks[i] = str;
+            bookStringList.add(str);
         }
-        return prettyListOfBooks;
+        return bookStringList;
     }
 
     public void start() {
@@ -54,7 +58,7 @@ public class BibliotecaApp {
             String input = scanner.next();
             switch (input) {
                 case OPT_LIST_OF_BOOKS:
-                    printArray(formatListOfBooks());
+                    printList(formatListOfBooks());
                     printArray(LIST_OF_OPTIONS);
                     break;
                 case OPT_CHECKOUT_BOOK:
@@ -96,6 +100,12 @@ public class BibliotecaApp {
 
     private void printArray(String[] strArray) {
         for (String str : strArray) {
+            System.out.println(str);
+        }
+    }
+
+    private void printList(List<String> strList) {
+        for (String str : strList) {
             System.out.println(str);
         }
     }

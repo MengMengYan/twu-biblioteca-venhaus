@@ -3,6 +3,8 @@ package com.twu.biblioteca;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static com.twu.biblioteca.Text.*;
@@ -116,6 +118,20 @@ public class OutputTest {
 
         String[] result = getSubOutput(LIST_START, LIST_END);
         assertThat(result, is(LIST_OF_TEST_BOOKS));
+    }
+
+    @Test
+    public void applicationOnlyShowsAvailableBooks() {
+        BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK + "\n" + 2 + "\n"
+                                   + OPT_LIST_OF_BOOKS);
+
+
+        app.start();
+
+        String[] resultTemp = getLastOutputLines(7);
+        String[] result = Arrays.copyOfRange(resultTemp, 0, 2);
+        String[] expected = Arrays.copyOfRange(LIST_OF_TEST_BOOKS, 0, 2);
+        assertThat(result, is(expected));
     }
 
     @Test

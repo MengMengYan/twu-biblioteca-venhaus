@@ -18,12 +18,12 @@ public class Text {
     public static final String PROMPT_CHECKOUT = "Enter the index number of the book you want to checkout.";
     public static final String PROMPT_RETURN = "Enter the index number of the book you want to return.";
 
-    public static final String SUCCESS_RETURN = "Return successful.";
-    public static final String SUCCESS_CHECKOUT = "Checkout successful.";
+    public static final String SUCCESS_RETURN = "Thank you for returning the book";
+    public static final String SUCCESS_CHECKOUT = "Thank you! Enjoy the book";
 
-    public static final String FAILURE_CHECKOUT_LOANED = "The selected book is already on loan.";
+    public static final String FAILURE_CHECKOUT_LOANED = "Sorry, that book is not available";
     public static final String FAILURE_CHECKOUT_NONEXISTENT = "There is no book with this index.";
-    public static final String FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER = "You do not currently hold a book with this index.";
+    public static final String FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER = "THat is not a valid book to return.";
 
 
     public static final String INVALID_INPUT = "Please select a valid option!";
