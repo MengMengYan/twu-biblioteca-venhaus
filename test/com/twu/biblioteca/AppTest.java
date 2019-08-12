@@ -1,22 +1,15 @@
 package com.twu.biblioteca;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static com.twu.biblioteca.Text.*;
 
-public class AppTest {
+import static com.twu.biblioteca.TestHelpers.*;
 
-    private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-    private final PrintStream outOriginal = System.out;
+public class AppTest {
 
     private final int GREETING_START        = 0;
     private final int GREETING_END          = GREETING_START + 1;
@@ -30,13 +23,8 @@ public class AppTest {
     private final int LIST_END              = LIST_START + LIST_LENGTH;
 
     @Before
-    public void setupOutput() {
-        System.setOut(new PrintStream(outStream));
-    }
-
-    @After
-    public void restoreOutput() {
-        System.setOut(outOriginal);
+    public void before() {
+        setupOutput();
     }
 
     @Test
@@ -64,7 +52,7 @@ public class AppTest {
     @Test
     public void applicationShouldNotProgressIfNoOptionSelected() {
         int numberOfLinesDisplayed = OPTIONS_END;
-        BibliotecaApp app = new BibliotecaApp();
+        BibliotecaApp app = setupApp("");
 
         app.start();
 
@@ -72,7 +60,6 @@ public class AppTest {
         String[] appOutputArr = appOutput.split("\n");
         assertThat(appOutputArr.length, is(numberOfLinesDisplayed));
     }
-
     @Test
     public void applicationShouldWarnUserIfLetterIsSelected() {
         String[] expected = {INVALID_INPUT};
@@ -148,30 +135,6 @@ public class AppTest {
         app.start();
         String[] result = getLastOutputLines(1);
         assertThat(result, is(expected));
-    }
-
-    private String[] getSubOutput(int from, int to) {
-        String[] appOutputArr = getSplitOutput();
-        String[] result = Arrays.copyOfRange(appOutputArr, from, to);
-        return result;
-    }
-
-    private String[] getLastOutputLines(int numLines) {
-        String[] appOutputArr = getSplitOutput();
-        String[] result = Arrays.copyOfRange(appOutputArr,
-                appOutputArr.length - numLines, appOutputArr.length);
-        return result;
-    }
-
-    private String[] getSplitOutput() {
-        String appOutput = outStream.toString();
-        return appOutput.split("\n");
-    }
-
-    private BibliotecaApp setupApp(String input) {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        System.setIn(inputStream);
-        return new BibliotecaApp();
     }
 
 }
