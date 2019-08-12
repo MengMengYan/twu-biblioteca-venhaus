@@ -19,12 +19,20 @@ public class AppTest {
 
     private final int GREETING_START        = 0;
     private final int GREETING_END          = GREETING_START + 1;
+    private final int OPTIONS_LENGTH        = 2;
     private final int OPTIONS_START         = GREETING_END;
-    private final int OPTIONS_END           = OPTIONS_START + 2;
+    private final int OPTIONS_END           = OPTIONS_START + OPTIONS_LENGTH;
     private final int OPTIONS_ERROR_START   = OPTIONS_END;
     private final int OPTIONS_ERROR_END     = OPTIONS_ERROR_START + 1;
+    private final int LIST_LENGTH           = 3;
     private final int LIST_START            = OPTIONS_END;
-    private final int LIST_END              = LIST_START + 3;
+    private final int LIST_END              = LIST_START + LIST_LENGTH;
+
+    private final String[] LIST_OF_BOOKS = {
+            "Book 1 | Author A | 2000",
+            "Book 2 | Author B | 2001",
+            "Book 3 | Author C | 2002"
+    };
 
     @Before
     public void setupOutput() {
@@ -43,7 +51,7 @@ public class AppTest {
 
         app.start();
 
-        String[] result = getPartOfResultFromAppOutput(GREETING_START, GREETING_END);
+        String[] result = getSubOutput(GREETING_START, GREETING_END);
         assertThat(result[0], is(expected));
     }
 
@@ -57,7 +65,7 @@ public class AppTest {
 
         app.start();
 
-        String[] result = getPartOfResultFromAppOutput(OPTIONS_START, OPTIONS_END);
+        String[] result = getSubOutput(OPTIONS_START, OPTIONS_END);
         assertThat(result, is(expected));
     }
 
@@ -80,7 +88,7 @@ public class AppTest {
 
         app.start();
 
-        String[] result = getPartOfResultFromAppOutput(OPTIONS_ERROR_START, OPTIONS_ERROR_END);
+        String[] result = getSubOutput(OPTIONS_ERROR_START, OPTIONS_ERROR_END);
         assertThat(result, is(expected));
     }
 
@@ -91,26 +99,48 @@ public class AppTest {
 
         app.start();
 
-        String[] result = getPartOfResultFromAppOutput(OPTIONS_ERROR_START, OPTIONS_ERROR_END);
+        String[] result = getSubOutput(OPTIONS_ERROR_START, OPTIONS_ERROR_END);
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void applicationShouldRepromptForUserInputOnInvalidInput() {
+        String[] expected = {
+                "Choose an option by entering the associated number and pressing ENTER",
+                "1. List of books"
+        };
+        BibliotecaApp app = setupApp("invalid");
+
+        app.start();
+
+        String[] result = getSubOutput(OPTIONS_ERROR_END, OPTIONS_ERROR_END + OPTIONS_LENGTH);
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void applicationShouldAcceptUserInputAfterInvalidInputWarning() {
+        String[] expected = LIST_OF_BOOKS;
+        BibliotecaApp app = setupApp("invalid\n1");
+
+        app.start();
+
+        String[] result = getSubOutput(OPTIONS_ERROR_END + OPTIONS_LENGTH,
+                                        OPTIONS_ERROR_END + OPTIONS_LENGTH + LIST_LENGTH);
         assertThat(result, is(expected));
     }
 
     @Test
     public void userCanViewListOfBooksWithAuthorAndPublicationYear() {
-        String[] expected = {
-                "Book 1 | Author A | 2000",
-                "Book 2 | Author B | 2001",
-                "Book 3 | Author C | 2002"
-        };
-        BibliotecaApp app = setupApp("1\n");
+        String[] expected = LIST_OF_BOOKS;
+        BibliotecaApp app = setupApp("1");
 
         app.start();
 
-        String[] result = getPartOfResultFromAppOutput(LIST_START, LIST_END);
+        String[] result = getSubOutput(LIST_START, LIST_END);
         assertThat(result, is(expected));
     }
 
-    private String[] getPartOfResultFromAppOutput(int from, int to) {
+    private String[] getSubOutput(int from, int to) {
         String appOutput = outStream.toString();
         String[] appOutputArr = appOutput.split("\n");
         String[] result = Arrays.copyOfRange(appOutputArr, from, to);
