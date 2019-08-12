@@ -3,6 +3,8 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.twu.biblioteca.Text.FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER;
+
 public class Customer {
 
     private List<Book> bookList = new ArrayList<>();
@@ -14,5 +16,17 @@ public class Customer {
     public void checkOutBook(int bookIdx) {
         Book book = Library.loanBook(bookIdx);
         bookList.add(book);
+    }
+
+    public void returnBook(int bookIdx) {
+        Book book;
+        try {
+            book = bookList.get(bookIdx);
+        } catch (IndexOutOfBoundsException e) {
+            throw new BookNotLoanedByCustomerException(FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER);
+        }
+
+        book.setAvailable(true);
+        bookList.remove(bookIdx);
     }
 }

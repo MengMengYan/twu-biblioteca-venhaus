@@ -12,9 +12,9 @@ import static com.twu.biblioteca.TestHelpers.*;
 public class OutputTest {
 
     private final String[] LIST_OF_TEST_BOOKS = {
-            "Book 0 | Roy | 2004",
-            "Book 1 | Paul | 2018",
-            "Book 2 | Mengmeng | 2018"
+            "0. Book 0 | Roy | 2004",
+            "1. Book 1 | Paul | 2018",
+            "2. Book 2 | Mengmeng | 2018"
     };
 
     private final int GREETING_START        = 0;
@@ -142,7 +142,7 @@ public class OutputTest {
     }
 
     @Test
-    public void userSeesMessageWhenTryingToLoanUnavailableBook() {
+    public void userSeesMessageWhenTryingToCheckoutUnavailableBook() {
         BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK + "\n" + 0 + "\n" +
                                      OPT_CHECKOUT_BOOK + "\n" + 0);
 
@@ -156,7 +156,7 @@ public class OutputTest {
     }
 
     @Test
-    public void userSeesMessageWhenTryingToLoanNonexistentBook() {
+    public void userSeesMessageWhenTryingToCheckoutNonexistentBook() {
         BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK + "\n" + 1000);
 
         app.start();
@@ -166,6 +166,43 @@ public class OutputTest {
         // Extract first line (failure message)
         String result = resultTemp[0];
         assertThat(result, is(FAILURE_CHECKOUT_NONEXISTENT));
+    }
+
+    @Test
+    public void userSeesPromptForBookReturn() {
+        BibliotecaApp app = setupApp(OPT_RETURN_BOOK);
+
+        app.start();
+
+        String[] result = getLastOutputLines(1);
+        assertThat(result[0], is(PROMPT_RETURN));
+    }
+
+    @Test
+    public void userSeesMessageOnSuccessfulReturn() {
+        BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK + "\n" + 1 + "\n"
+                                   + OPT_RETURN_BOOK + "\n" + 0);
+
+        app.start();
+
+        // Get lines of options + preceding success message
+        String[] resultTemp = getLastOutputLines(OPTIONS_LENGTH + 1);
+        // Extract first line (success message)
+        String result = resultTemp[0];
+        assertThat(result, is(SUCCESS_RETURN));
+    }
+
+    @Test
+    public void userSeesMessageWhenTryingToCheckoutBookNotLoanedByThem() {
+        BibliotecaApp app = setupApp(OPT_RETURN_BOOK + "\n" + 100);
+
+        app.start();
+
+        // Get lines of options + preceding failure message
+        String[] resultTemp = getLastOutputLines(OPTIONS_LENGTH + 1);
+        // Extract first line (failure message)
+        String result = resultTemp[0];
+        assertThat(result, is(FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER));
     }
 
     @Test

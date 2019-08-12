@@ -32,7 +32,8 @@ public class BibliotecaApp {
         String[] prettyListOfBooks = new String[bookList.size()];
         for(int i = 0; i < prettyListOfBooks.length; i++) {
             Book book = bookList.get(i);
-            String str = book.getTitle() + " | "
+            String str = i + ". "
+                       + book.getTitle() + " | "
                        + book.getAuthor() + " | "
                        + book.getYear();
             prettyListOfBooks[i] = str;
@@ -64,6 +65,19 @@ public class BibliotecaApp {
                             customer.checkOutBook(Integer.parseInt(input));
                             System.out.println(SUCCESS_CHECKOUT);
                         } catch (BookUnavailableException | BookNonexistentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        printArray(LIST_OF_OPTIONS);
+                    }
+                    break;
+                case OPT_RETURN_BOOK:
+                    System.out.println(PROMPT_RETURN);
+                    if (scanner.hasNext()) {
+                        input = scanner.next();
+                        try {
+                            customer.returnBook(Integer.parseInt(input));
+                            System.out.println(SUCCESS_RETURN);
+                        } catch (BookNotLoanedByCustomerException e) {
                             System.out.println(e.getMessage());
                         }
                         printArray(LIST_OF_OPTIONS);

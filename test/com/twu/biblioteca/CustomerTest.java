@@ -20,11 +20,11 @@ public class CustomerTest {
     public void customerCanCheckoutAvailableBook() {
         Customer customer = new Customer();
         Book book1 = Library.getBook(1);
-        ArrayList<Book> expected = new ArrayList<>();
-        expected.add(book1);
 
         customer.checkOutBook(1);
 
+        ArrayList<Book> expected = new ArrayList<>();
+        expected.add(book1);
         assertThat(customer.getBookList(), is(expected));
     }
 
@@ -35,5 +35,30 @@ public class CustomerTest {
         book1.setAvailable(false);
 
         customer.checkOutBook(1);
+    }
+
+    @Test
+    public void customerCanReturnLoanedBook() {
+        Customer customer = new Customer();
+        Book book1 = Library.getBook(1);
+        ArrayList<Book> expected = new ArrayList<>();
+        expected.add(book1);
+
+        customer.checkOutBook(1);
+        customer.returnBook(0);
+
+        assertThat(customer.getBookList().size(), is(0));
+        assertThat(book1.isAvailable(), is(true));
+    }
+
+    @Test(expected = BookNotLoanedByCustomerException.class)
+    public void customerCannotReturnBookThatIsNotLoanedByThem() {
+        Customer customer = new Customer();
+        Book book1 = Library.getBook(1);
+        ArrayList<Book> expected = new ArrayList<>();
+        expected.add(book1);
+
+        customer.checkOutBook(1);
+        customer.returnBook(1);
     }
 }
