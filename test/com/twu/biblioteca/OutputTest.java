@@ -9,7 +9,7 @@ import static com.twu.biblioteca.Text.*;
 
 import static com.twu.biblioteca.TestHelpers.*;
 
-public class AppTest {
+public class OutputTest {
 
     private final int GREETING_START        = 0;
     private final int GREETING_END          = GREETING_START + 1;
