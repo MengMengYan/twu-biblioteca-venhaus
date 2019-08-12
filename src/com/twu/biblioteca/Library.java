@@ -1,5 +1,8 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNonexistentException;
+import com.twu.biblioteca.exceptions.BookUnavailableException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +12,22 @@ import static com.twu.biblioteca.Text.FAILURE_CHECKOUT_NONEXISTENT;
 public class Library {
 
     private static List<Book> bookList = new ArrayList<>();
+    private static List<Movie> movieList = new ArrayList<>();
 
     public static void addBook(Book book) {
         bookList.add(book);
     }
 
+    public static void addMovie(Movie movie) {
+        movieList.add(movie);
+    }
+
     public static List<Book> getBookList() {
         return new ArrayList<>(bookList);
+    }
+
+    public static List<Movie> getMovieList() {
+        return new ArrayList<>(movieList);
     }
 
     public static Book getBook(int bookIdx) {
@@ -42,5 +54,6 @@ public class Library {
 
     public static void reset() {
         bookList = new ArrayList<>();
+        movieList = new ArrayList<>();
     }
 }

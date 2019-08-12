@@ -1,7 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.exceptions;
 
 public class BookNotLoanedByCustomerException extends RuntimeException {
-    BookNotLoanedByCustomerException(String message) {
+    public BookNotLoanedByCustomerException(String message) {
         super(message);
     }
 }

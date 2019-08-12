@@ -1,5 +1,10 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNonexistentException;
+import com.twu.biblioteca.exceptions.BookNotLoanedByCustomerException;
+import com.twu.biblioteca.exceptions.BookUnavailableException;
+import com.twu.biblioteca.exceptions.NonIntegerIndexException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

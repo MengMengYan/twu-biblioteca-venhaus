@@ -1,7 +1,7 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.exceptions;
 
 public class BookUnavailableException extends RuntimeException {
-    BookUnavailableException(String message) {
+    public BookUnavailableException(String message) {
         super(message);
     }
 }

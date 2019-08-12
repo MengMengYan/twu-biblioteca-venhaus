@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNotLoanedByCustomerException;
+import com.twu.biblioteca.exceptions.BookUnavailableException;
 import org.junit.Before;
 import org.junit.Test;
 
