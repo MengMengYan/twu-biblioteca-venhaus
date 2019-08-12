@@ -5,6 +5,7 @@ public class Book {
     private String author = "Unknown";
     private String title = "Unknown";
     private int year = 0;
+    private boolean available = true;
 
     public String getTitle() {
         return title;
@@ -28,5 +29,13 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

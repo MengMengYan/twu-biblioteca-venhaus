@@ -27,5 +27,15 @@ public class BookTest {
         assertThat(book.getYear(), is(2019));
     }
 
+    @Test
+    public void bookLoanStatusCanBeChanged() {
+        Book book = new Book();
+        assertThat(book.isAvailable(), is(true));
 
+        book.setAvailable(false);
+        assertThat(book.isAvailable(), is(false));
+
+        book.setAvailable(true);
+        assertThat(book.isAvailable(), is(true));
+    }
 }
