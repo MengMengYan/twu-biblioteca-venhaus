@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static com.twu.biblioteca.Text.*;
 
 public class AppTest {
 
@@ -19,20 +20,14 @@ public class AppTest {
 
     private final int GREETING_START        = 0;
     private final int GREETING_END          = GREETING_START + 1;
-    private final int OPTIONS_LENGTH        = 2;
+    private final int OPTIONS_LENGTH        = LIST_OF_OPTIONS.length;
     private final int OPTIONS_START         = GREETING_END;
     private final int OPTIONS_END           = OPTIONS_START + OPTIONS_LENGTH;
     private final int OPTIONS_ERROR_START   = OPTIONS_END;
     private final int OPTIONS_ERROR_END     = OPTIONS_ERROR_START + 1;
-    private final int LIST_LENGTH           = 3;
+    private final int LIST_LENGTH           = LIST_OF_BOOKS.length;
     private final int LIST_START            = OPTIONS_END;
     private final int LIST_END              = LIST_START + LIST_LENGTH;
-
-    private final String[] LIST_OF_BOOKS = {
-            "Book 1 | Author A | 2000",
-            "Book 2 | Author B | 2001",
-            "Book 3 | Author C | 2002"
-    };
 
     @Before
     public void setupOutput() {
@@ -46,7 +41,7 @@ public class AppTest {
 
     @Test
     public void applicationGreetsUserOnStartup() {
-        String expected = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
+        String expected = GREETING;
         BibliotecaApp app = setupApp("");
 
         app.start();
@@ -57,10 +52,7 @@ public class AppTest {
 
     @Test
     public void applicationDisplaysMenuOfOptions() {
-        String[] expected = {
-                "Choose an option by entering the associated number and pressing ENTER",
-                "1. List of books"
-        };
+        String[] expected = LIST_OF_OPTIONS;
         BibliotecaApp app = setupApp("");
 
         app.start();
@@ -83,7 +75,7 @@ public class AppTest {
 
     @Test
     public void applicationShouldWarnUserIfLetterIsSelected() {
-        String[] expected = {"Please select a valid option!"};
+        String[] expected = {INVALID_INPUT};
         BibliotecaApp app = setupApp("z");
 
         app.start();
@@ -94,7 +86,7 @@ public class AppTest {
 
     @Test
     public void applicationShouldWarnUserIfInvalidNumberIsSelected() {
-        String[] expected = {"Please select a valid option!"};
+        String[] expected = {INVALID_INPUT};
         BibliotecaApp app = setupApp("100");
 
         app.start();
@@ -105,10 +97,7 @@ public class AppTest {
 
     @Test
     public void applicationShouldRepromptForUserInputOnInvalidInput() {
-        String[] expected = {
-                "Choose an option by entering the associated number and pressing ENTER",
-                "1. List of books"
-        };
+        String[] expected = LIST_OF_OPTIONS;
         BibliotecaApp app = setupApp("invalid");
 
         app.start();
@@ -140,11 +129,43 @@ public class AppTest {
         assertThat(result, is(expected));
     }
 
+    @Test
+    public void applicationDisplaysOptionsMenuAfterCorrectNonQuittingOption() {
+        String[] expected = LIST_OF_OPTIONS;
+        BibliotecaApp app = setupApp("1");
+
+        app.start();
+
+        String[] result = getLastOutputLines(OPTIONS_LENGTH);
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void userCanQuitApplication() {
+        String[] expected = {VALEDICTION};
+        BibliotecaApp app = setupApp("2");
+
+        app.start();
+        String[] result = getLastOutputLines(1);
+        assertThat(result, is(expected));
+    }
+
     private String[] getSubOutput(int from, int to) {
-        String appOutput = outStream.toString();
-        String[] appOutputArr = appOutput.split("\n");
+        String[] appOutputArr = getSplitOutput();
         String[] result = Arrays.copyOfRange(appOutputArr, from, to);
         return result;
+    }
+
+    private String[] getLastOutputLines(int numLines) {
+        String[] appOutputArr = getSplitOutput();
+        String[] result = Arrays.copyOfRange(appOutputArr,
+                appOutputArr.length - numLines, appOutputArr.length);
+        return result;
+    }
+
+    private String[] getSplitOutput() {
+        String appOutput = outStream.toString();
+        return appOutput.split("\n");
     }
 
     private BibliotecaApp setupApp(String input) {
