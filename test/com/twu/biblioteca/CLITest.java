@@ -11,7 +11,7 @@ import static com.twu.biblioteca.Text.*;
 
 import static com.twu.biblioteca.TestHelpers.*;
 
-public class OutputTest {
+public class CLITest {
 
     private final String[] LIST_OF_TEST_BOOKS = {
             "0. Book 0 | Roy | 2004",
@@ -185,6 +185,19 @@ public class OutputTest {
     }
 
     @Test
+    public void userSeesMessageWhenTryingToCheckoutWithNonIntegerIndex() {
+        BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK + "\n" + "text");
+
+        app.start();
+
+        // Get lines of options + preceding failure message
+        String[] resultTemp = getLastOutputLines(OPTIONS_LENGTH + 1);
+        // Extract first line (failure message)
+        String result = resultTemp[0];
+        assertThat(result, is(FAILURE_NON_INTEGER_INDEX));
+    }
+
+    @Test
     public void userSeesPromptForBookReturn() {
         BibliotecaApp app = setupApp(OPT_RETURN_BOOK);
 
@@ -219,6 +232,19 @@ public class OutputTest {
         // Extract first line (failure message)
         String result = resultTemp[0];
         assertThat(result, is(FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER));
+    }
+
+    @Test
+    public void userSeesMessageWhenTryingToReturnWithNonIntegerIndex() {
+        BibliotecaApp app = setupApp(OPT_RETURN_BOOK + "\n" + "text");
+
+        app.start();
+
+        // Get lines of options + preceding failure message
+        String[] resultTemp = getLastOutputLines(OPTIONS_LENGTH + 1);
+        // Extract first line (failure message)
+        String result = resultTemp[0];
+        assertThat(result, is(FAILURE_NON_INTEGER_INDEX));
     }
 
     @Test

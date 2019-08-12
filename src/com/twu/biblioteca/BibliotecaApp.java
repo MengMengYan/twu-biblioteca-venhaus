@@ -58,34 +58,13 @@ public class BibliotecaApp {
             String input = scanner.next();
             switch (input) {
                 case OPT_LIST_OF_BOOKS:
-                    printList(formatListOfBooks());
-                    printArray(LIST_OF_OPTIONS);
+                    showListOfBooks();
                     break;
                 case OPT_CHECKOUT_BOOK:
-                    System.out.println(PROMPT_CHECKOUT);
-                    if (scanner.hasNext()) {
-                        input = scanner.next();
-                        try {
-                            customer.checkOutBook(Integer.parseInt(input));
-                            System.out.println(SUCCESS_CHECKOUT);
-                        } catch (BookUnavailableException | BookNonexistentException e) {
-                            System.out.println(e.getMessage());
-                        }
-                        printArray(LIST_OF_OPTIONS);
-                    }
+                    startCheckoutProcess(customer);
                     break;
                 case OPT_RETURN_BOOK:
-                    System.out.println(PROMPT_RETURN);
-                    if (scanner.hasNext()) {
-                        input = scanner.next();
-                        try {
-                            customer.returnBook(Integer.parseInt(input));
-                            System.out.println(SUCCESS_RETURN);
-                        } catch (BookNotLoanedByCustomerException e) {
-                            System.out.println(e.getMessage());
-                        }
-                        printArray(LIST_OF_OPTIONS);
-                    }
+                    startReturnProcess(customer);
                     break;
                 case OPT_QUIT:
                     System.out.println(VALEDICTION);
@@ -96,6 +75,58 @@ public class BibliotecaApp {
                     break;
             }
         }
+    }
+
+    private void showListOfBooks() {
+        printList(formatListOfBooks());
+        printArray(LIST_OF_OPTIONS);
+    }
+
+    private void startCheckoutProcess(Customer customer) {
+        System.out.println(PROMPT_CHECKOUT);
+        if (scanner.hasNext()) {
+            try {
+                int bookIdx = parseIndex();
+                checkoutBook(customer, bookIdx);
+            } catch (BookUnavailableException | BookNonexistentException | NonIntegerIndexException e) {
+                System.out.println(e.getMessage());
+            }
+            printArray(LIST_OF_OPTIONS);
+        }
+    }
+
+    private void checkoutBook(Customer customer, int bookIdx) throws BookUnavailableException, BookNonexistentException, NonIntegerIndexException {
+        try {
+            customer.checkOutBook(bookIdx);
+        } catch (NumberFormatException e) {
+            throw new NonIntegerIndexException(FAILURE_NON_INTEGER_INDEX);
+        }
+        System.out.println(SUCCESS_CHECKOUT);
+    }
+
+    private void startReturnProcess(Customer customer) {
+        System.out.println(PROMPT_RETURN);
+        if (scanner.hasNext()) {
+            try {
+                int bookIdx = parseIndex();
+                customer.returnBook(bookIdx);
+                System.out.println(SUCCESS_RETURN);
+            } catch (BookNotLoanedByCustomerException | NonIntegerIndexException e) {
+                System.out.println(e.getMessage());
+            }
+            printArray(LIST_OF_OPTIONS);
+        }
+    }
+
+    private int parseIndex() {
+        String bookIdxStr = scanner.next();
+        int bookIdx;
+        try {
+            bookIdx = Integer.parseInt(bookIdxStr);
+        } catch (NumberFormatException e) {
+            throw new NonIntegerIndexException(FAILURE_NON_INTEGER_INDEX);
+        }
+        return bookIdx;
     }
 
     private void printArray(String[] strArray) {

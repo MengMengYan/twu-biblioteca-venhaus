@@ -22,11 +22,10 @@ public class Customer {
         Book book;
         try {
             book = bookList.get(bookIdx);
+            book.setAvailable(true);
+            bookList.remove(bookIdx);
         } catch (IndexOutOfBoundsException e) {
             throw new BookNotLoanedByCustomerException(FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER);
         }
-
-        book.setAvailable(true);
-        bookList.remove(bookIdx);
     }
 }

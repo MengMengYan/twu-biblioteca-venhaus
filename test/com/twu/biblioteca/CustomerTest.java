@@ -54,11 +54,6 @@ public class CustomerTest {
     @Test(expected = BookNotLoanedByCustomerException.class)
     public void customerCannotReturnBookThatIsNotLoanedByThem() {
         Customer customer = new Customer();
-        Book book1 = Library.getBook(1);
-        ArrayList<Book> expected = new ArrayList<>();
-        expected.add(book1);
-
-        customer.checkOutBook(1);
         customer.returnBook(1);
     }
 }

@@ -23,7 +23,8 @@ public class Text {
 
     public static final String FAILURE_CHECKOUT_LOANED = "Sorry, that book is not available";
     public static final String FAILURE_CHECKOUT_NONEXISTENT = "There is no book with this index.";
-    public static final String FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER = "THat is not a valid book to return.";
+    public static final String FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER = "That is not a valid book to return.";
+    public static final String FAILURE_NON_INTEGER_INDEX = "The index has to be an integer.";
 
 
     public static final String INVALID_INPUT = "Please select a valid option!";
