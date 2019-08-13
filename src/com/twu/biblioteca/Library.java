@@ -1,5 +1,8 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNonexistentException;
+import com.twu.biblioteca.exceptions.BookUnavailableException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class Library {
         return new ArrayList<>(bookList);
     }
 
-    public static Book getBook(int bookIdx) {
+    public static Book getBook(int bookIdx) throws BookNonexistentException {
         Book book;
         try {
             book = bookList.get(bookIdx);
@@ -28,7 +31,7 @@ public class Library {
         return book;
     }
 
-    public static Book loanBook(int bookIdx) {
+    public static Book loanBook(int bookIdx) throws BookUnavailableException, BookNonexistentException {
 
         Book book = getBook(bookIdx);
 

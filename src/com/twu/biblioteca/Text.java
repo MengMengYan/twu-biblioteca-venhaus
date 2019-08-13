@@ -1,10 +1,10 @@
 package com.twu.biblioteca;
 
 public class Text {
-    public static final String OPT_LIST_OF_BOOKS = "1";
-    public static final String OPT_CHECKOUT_BOOK = "2";
-    public static final String OPT_RETURN_BOOK = "3";
-    public static final String OPT_QUIT = "4";
+    public static final int OPT_LIST_OF_BOOKS = 1;
+    public static final int OPT_CHECKOUT_BOOK = 2;
+    public static final int OPT_RETURN_BOOK = 3;
+    public static final int OPT_QUIT = 4;
 
     public static final String GREETING = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
 
@@ -24,7 +24,7 @@ public class Text {
     public static final String FAILURE_CHECKOUT_LOANED = "Sorry, that book is not available";
     public static final String FAILURE_CHECKOUT_NONEXISTENT = "There is no book with this index.";
     public static final String FAILURE_RETURN_BOOK_NOT_LOANED_BY_CUSTOMER = "That is not a valid book to return.";
-    public static final String FAILURE_NON_INTEGER_INDEX = "The index has to be an integer.";
+    public static final String FAILURE_NON_POSINT_INDEX = "The index has to be a positive integer.";
 
 
     public static final String INVALID_INPUT = "Please select a valid option!";

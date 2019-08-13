@@ -1,5 +1,8 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNonexistentException;
+import com.twu.biblioteca.exceptions.BookNotLoanedByCustomerException;
+import com.twu.biblioteca.exceptions.BookUnavailableException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +20,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void customerCanCheckoutAvailableBook() {
+    public void customerCanCheckoutAvailableBook() throws BookNonexistentException, BookUnavailableException {
         Customer customer = new Customer();
         Book book1 = Library.getBook(1);
 
@@ -29,7 +32,7 @@ public class CustomerTest {
     }
 
     @Test(expected = BookUnavailableException.class)
-    public void customerCannotCheckoutUnavailableBook() {
+    public void customerCannotCheckoutUnavailableBook() throws BookNonexistentException, BookUnavailableException {
         Customer customer = new Customer();
         Book book1 = Library.getBook(1);
         book1.setAvailable(false);
@@ -38,7 +41,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void customerCanReturnLoanedBook() {
+    public void customerCanReturnLoanedBook() throws BookNonexistentException, BookUnavailableException, BookNotLoanedByCustomerException {
         Customer customer = new Customer();
         Book book1 = Library.getBook(1);
         ArrayList<Book> expected = new ArrayList<>();
@@ -52,7 +55,7 @@ public class CustomerTest {
     }
 
     @Test(expected = BookNotLoanedByCustomerException.class)
-    public void customerCannotReturnBookThatIsNotLoanedByThem() {
+    public void customerCannotReturnBookThatIsNotLoanedByThem() throws BookNotLoanedByCustomerException {
         Customer customer = new Customer();
         customer.returnBook(1);
     }

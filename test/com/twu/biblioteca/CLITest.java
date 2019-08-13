@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -71,10 +72,12 @@ public class CLITest {
     public void applicationShouldWarnUserIfLetterIsSelected() {
         BibliotecaApp app = setupApp("z");
 
-        app.start();
+        try {
+            app.start();
+        } catch (NoSuchElementException e) {}
 
         String[] result = getSubOutput(OPTIONS_ERROR_START, OPTIONS_ERROR_END);
-        String[] expected = {INVALID_INPUT};
+        String[] expected = {FAILURE_NON_POSINT_INDEX};
         assertThat(result, is(expected));
     }
 
@@ -93,10 +96,12 @@ public class CLITest {
     public void applicationShouldRepromptForUserInputOnInvalidInput() {
         BibliotecaApp app = setupApp("invalid");
 
-        app.start();
+        try {
+            app.start();
+        } catch (NoSuchElementException e) { }
 
-        String[] result = getSubOutput(OPTIONS_ERROR_END, OPTIONS_ERROR_END + OPTIONS_LENGTH);
-        assertThat(result, is(LIST_OF_OPTIONS));
+        String[] result = getLastOutputLines(1);
+        assertThat(result[0], is(FAILURE_NON_POSINT_INDEX));
     }
 
     @Test
@@ -105,8 +110,8 @@ public class CLITest {
 
         app.start();
 
-        String[] result = getSubOutput(OPTIONS_ERROR_END + OPTIONS_LENGTH,
-                                        OPTIONS_ERROR_END + OPTIONS_LENGTH + LIST_LENGTH);
+        String[] tempResult = getLastOutputLines(8);
+        String[] result = Arrays.copyOfRange(tempResult, 0, 3);
         assertThat(result, is(LIST_OF_TEST_BOOKS));
     }
 
@@ -138,7 +143,9 @@ public class CLITest {
     public void userSeesPromptForBookCheckout() {
         BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK);
 
-        app.start();
+        try {
+            app.start();
+        } catch (NoSuchElementException e) {}
 
         String[] result = getLastOutputLines(1);
         assertThat(result[0], is(PROMPT_CHECKOUT));
@@ -188,20 +195,24 @@ public class CLITest {
     public void userSeesMessageWhenTryingToCheckoutWithNonIntegerIndex() {
         BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK + "\n" + "text");
 
-        app.start();
+        try {
+            app.start();
+        } catch (NoSuchElementException e) { }
 
         // Get lines of options + preceding failure message
-        String[] resultTemp = getLastOutputLines(OPTIONS_LENGTH + 1);
+        String[] resultTemp = getLastOutputLines(1);
         // Extract first line (failure message)
         String result = resultTemp[0];
-        assertThat(result, is(FAILURE_NON_INTEGER_INDEX));
+        assertThat(result, is(FAILURE_NON_POSINT_INDEX));
     }
 
     @Test
     public void userSeesPromptForBookReturn() {
         BibliotecaApp app = setupApp(OPT_RETURN_BOOK);
 
-        app.start();
+        try {
+            app.start();
+        } catch (NoSuchElementException e) { }
 
         String[] result = getLastOutputLines(1);
         assertThat(result[0], is(PROMPT_RETURN));
@@ -238,13 +249,15 @@ public class CLITest {
     public void userSeesMessageWhenTryingToReturnWithNonIntegerIndex() {
         BibliotecaApp app = setupApp(OPT_RETURN_BOOK + "\n" + "text");
 
-        app.start();
+        try {
+            app.start();
+        } catch (NoSuchElementException e) { }
 
         // Get lines of options + preceding failure message
-        String[] resultTemp = getLastOutputLines(OPTIONS_LENGTH + 1);
+        String[] resultTemp = getLastOutputLines(1);
         // Extract first line (failure message)
         String result = resultTemp[0];
-        assertThat(result, is(FAILURE_NON_INTEGER_INDEX));
+        assertThat(result, is(FAILURE_NON_POSINT_INDEX));
     }
 
     @Test

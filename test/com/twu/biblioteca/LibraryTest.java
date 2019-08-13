@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNonexistentException;
+import com.twu.biblioteca.exceptions.BookUnavailableException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +53,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void libraryCanLoanOutAvailableBook() {
+    public void libraryCanLoanOutAvailableBook() throws BookUnavailableException, BookNonexistentException {
         Book book1 = new Book();
         book1.setAuthor("Pablo");
         book1.setTitle("Book 1");
@@ -65,7 +67,7 @@ public class LibraryTest {
     }
 
     @Test(expected = BookUnavailableException.class)
-    public void libraryCannotLoanOutUnavailableBook() {
+    public void libraryCannotLoanOutUnavailableBook() throws BookNonexistentException, BookUnavailableException {
         Book book1 = new Book();
         book1.setAuthor("Pablo");
         book1.setTitle("Book 1");
@@ -77,7 +79,7 @@ public class LibraryTest {
     }
 
     @Test(expected = BookNonexistentException.class)
-    public void libraryCannotLoanOutNonexistentBook() {
+    public void libraryCannotLoanOutNonexistentBook() throws BookNonexistentException, BookUnavailableException {
         Library.loanBook(0);
     }
 
