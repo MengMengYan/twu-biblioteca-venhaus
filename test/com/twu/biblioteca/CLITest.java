@@ -12,6 +12,7 @@ import static com.twu.biblioteca.Text.*;
 
 import static com.twu.biblioteca.TestHelpers.*;
 
+//TODO CLITest seems to test both CLI and BibliotecaApp
 public class CLITest {
 
     private final String[] LIST_OF_TEST_BOOKS = {
@@ -68,6 +69,9 @@ public class CLITest {
         String[] appOutputArr = appOutput.split("\n");
         assertThat(appOutputArr.length, is(OPTIONS_END));
     }
+
+    //TODO in a way you are expecting the NoSuchElementException to be thrown.
+    // You actually already know how to handle this, see your CustomerTest
     @Test
     public void applicationShouldWarnUserIfLetterIsSelected() {
         BibliotecaApp app = setupApp("z");
@@ -92,6 +96,7 @@ public class CLITest {
         assertThat(result, is(expected));
     }
 
+    //TODO isn't applicationShouldWarnUserIFLetterIsSelected covered by this?
     @Test
     public void applicationShouldRepromptForUserInputOnInvalidInput() {
         BibliotecaApp app = setupApp("invalid");
@@ -106,6 +111,7 @@ public class CLITest {
 
     @Test
     public void applicationShouldAcceptUserInputAfterInvalidInputWarning() {
+        //TODO this looks like the beginning of a journey test :)
         BibliotecaApp app = setupApp("invalid\n1");
 
         app.start();
@@ -129,7 +135,6 @@ public class CLITest {
     public void applicationOnlyShowsAvailableBooks() {
         BibliotecaApp app = setupApp(OPT_CHECKOUT_BOOK + "\n" + 2 + "\n"
                                    + OPT_LIST_OF_BOOKS);
-
 
         app.start();
 
@@ -157,6 +162,7 @@ public class CLITest {
 
         app.start();
 
+        //TODO there is some duplicated code in the following tests. You might wanna extract them
         // Get lines of options + preceding success message
         String[] resultTemp = getLastOutputLines(OPTIONS_LENGTH + 1);
         // Extract first line (success message)

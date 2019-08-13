@@ -9,6 +9,9 @@ import java.util.List;
 import static com.twu.biblioteca.Text.FAILURE_CHECKOUT_LOANED;
 import static com.twu.biblioteca.Text.FAILURE_CHECKOUT_NONEXISTENT;
 
+/*
+TODO what is the reason behind making these methods static? I was told the code is supposed to be object oriented.
+ */
 public class Library {
 
     private static List<Book> bookList = new ArrayList<>();

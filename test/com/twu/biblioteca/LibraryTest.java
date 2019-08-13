@@ -19,6 +19,7 @@ public class LibraryTest {
         Library.reset();
     }
 
+    //TODO looks like an assertion is missing
     @Test
     public void libraryCanAddBooks() {
         Book newBook = new Book();

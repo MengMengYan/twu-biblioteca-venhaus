@@ -9,6 +9,8 @@ public class TestHelpers {
 
     static ByteArrayOutputStream outStream;
 
+    //TODO setOut changes the standard output for the entire JVM. This can have unexpected side effects.
+    // That is not necessary. Try to have a look into Dependency Injections.
      static void setupOutput() {
         outStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outStream));
@@ -34,6 +36,7 @@ public class TestHelpers {
 
     static BibliotecaApp setupApp(String input) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+        //TODO similarly to above but checking out for one of them is fine
         System.setIn(inputStream);
         return new BibliotecaApp();
     }

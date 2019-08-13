@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+//TODO are these all constants of the application? What's the reason to keep them at one place instead of separately?
 public class Text {
     public static final int OPT_LIST_OF_BOOKS = 1;
     public static final int OPT_CHECKOUT_BOOK = 2;
