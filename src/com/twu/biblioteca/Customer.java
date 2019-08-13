@@ -1,6 +1,8 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.exceptions.BookNonexistentException;
 import com.twu.biblioteca.exceptions.BookNotLoanedByCustomerException;
+import com.twu.biblioteca.exceptions.BookUnavailableException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +17,12 @@ public class Customer {
         return new ArrayList<>(bookList);
     }
 
-    public void checkOutBook(int bookIdx) {
+    public void checkOutBook(int bookIdx) throws BookUnavailableException, BookNonexistentException {
         Book book = Library.loanBook(bookIdx);
         bookList.add(book);
     }
 
-    public void returnBook(int bookIdx) {
+    public void returnBook(int bookIdx) throws BookNotLoanedByCustomerException {
         Book book;
         try {
             book = bookList.get(bookIdx);

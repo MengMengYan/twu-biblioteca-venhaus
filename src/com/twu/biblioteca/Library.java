@@ -12,25 +12,16 @@ import static com.twu.biblioteca.Text.FAILURE_CHECKOUT_NONEXISTENT;
 public class Library {
 
     private static List<Book> bookList = new ArrayList<>();
-    private static List<Movie> movieList = new ArrayList<>();
-
+    
     public static void addBook(Book book) {
         bookList.add(book);
-    }
-
-    public static void addMovie(Movie movie) {
-        movieList.add(movie);
     }
 
     public static List<Book> getBookList() {
         return new ArrayList<>(bookList);
     }
 
-    public static List<Movie> getMovieList() {
-        return new ArrayList<>(movieList);
-    }
-
-    public static Book getBook(int bookIdx) {
+    public static Book getBook(int bookIdx) throws BookNonexistentException {
         Book book;
         try {
             book = bookList.get(bookIdx);
@@ -40,7 +31,7 @@ public class Library {
         return book;
     }
 
-    public static Book loanBook(int bookIdx) {
+    public static Book loanBook(int bookIdx) throws BookUnavailableException, BookNonexistentException {
 
         Book book = getBook(bookIdx);
 
@@ -54,6 +45,5 @@ public class Library {
 
     public static void reset() {
         bookList = new ArrayList<>();
-        movieList = new ArrayList<>();
     }
 }

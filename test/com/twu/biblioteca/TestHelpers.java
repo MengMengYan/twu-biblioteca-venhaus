@@ -37,4 +37,8 @@ public class TestHelpers {
         System.setIn(inputStream);
         return new BibliotecaApp();
     }
+
+    static BibliotecaApp setupApp(int input) {
+        return setupApp("" + input);
+    }
 }
